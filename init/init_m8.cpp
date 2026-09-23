@@ -101,20 +101,22 @@ void vendor_load_properties()
         set_ro_product_prop("device", "htc_m8wl");
         set_ro_product_prop("model", "m8wl");
     } else if (bootmid == "0P6B70000") {
-        /* m8spr (m8whl) */
+        /* m8spr (m8whl), SIM-unlocked for GSM, UMTS and LTE carriers */
         common_properties();
-        cdma_properties("1", "8");
+        /*
+         * Mode 9 (LTE/GSM/WCDMA) gives TelephonyManager.getPhoneType() a GSM
+         * phone, and subscription source 0 reads identity from the SIM rather
+         * than the Sprint NV items. Telephony stores the allowed network types
+         * per subscription on first boot, so a device that already booted with
+         * another default keeps it until a data wipe.
+         */
+        gsm_properties("9");
+        property_override("ro.telephony.default_cdma_sub", "0");
         property_override("ro.build.description", "6.20.651.3 CL682910 release-keys");
         property_override("ro.build.product", "htc_m8whl");
         property_override("ro.ril.disable.fd.plmn.prefix", "23402,23410,23411,23420,23594,27202,27205");
         property_override("ro.ril.oem.ecclist", "911");
         property_override("ro.ril.set.mtusize", "1422");
-        property_override("ro.cdma.home.operator.numeric", "310120");
-        property_override("gsm.sim.operator.numeric", "310120");
-        property_override("gsm.operator.numeric", "310120");
-        property_override("ro.cdma.home.operator.alpha", "Sprint");
-        property_override("gsm.sim.operator.alpha", "Sprint");
-        property_override("gsm.operator.alpha", "310120");
         property_override("vendor.rild.libpath", "/vendor/lib/libril_spr-qc-qmi-1.so");
         set_ro_build_fingerprint_prop("htc/sprint_wwe/htc_m8whl:6.0/MRA58K/682910.3:user/release-keys");
         set_ro_product_prop("device", "htc_m8whl");
