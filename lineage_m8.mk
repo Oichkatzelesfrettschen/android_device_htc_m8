@@ -18,6 +18,11 @@
 # Inherit from m8 device
 $(call inherit-product, device/htc/m8/device.mk)
 
+# vendor/lineage/config/common.mk adds the su package (/system/xbin/su) only
+# when WITH_SU is true on a non-user variant; without it, a userdebug build
+# has no su on PATH even though bionic's default PATH includes /system/xbin.
+WITH_SU := true
+
 # Inherit some common Lineage stuff.
 $(call inherit-product, vendor/lineage/config/common_full_phone.mk)
 
