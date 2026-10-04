@@ -55,7 +55,7 @@ BOARD_SYSTEMIMAGE_PARTITION_SIZE := 2818572288
 BOARD_USERDATAIMAGE_PARTITION_SIZE := 13153337344
 
 # Vendor Init
-TARGET_INIT_VENDOR_LIB := //device/htc/m8:libinit_m8
+$(call soong_config_set,libinit,vendor_init_lib,//device/htc/m8:libinit_m8)
 TARGET_RECOVERY_DEVICE_MODULES += libinit_m8
 
 # Inherit from the proprietary version
